@@ -57,6 +57,7 @@ rep(1,5); rep(c(1,3),5)
 ls() ; y ; x1 ; x2 ; x3
 rep(1,5) ; rep(1,times=5) ; rep(times=5,1)
 rep(c(1,3),5)
+?c
 rep(c(1,3),times=5)
 rep(c(1,3),each=5)
 
@@ -72,18 +73,29 @@ abline(v=5, h=0.3, col=1:2) #h - horizontal line, v - vertical line, col=colour 
 mean(x6)
 sd(x6)
 (x7 = runif(n=10, min=2, max=10))
+plot(x7)
+?distributions
 
 #removing decimal places/ round----
 floor(10.35)
-x6
-floor(x6)
-ceiling(x6)
+(x6 = rnorm(n=10, mean=5, sd=1))
+floor(x6) #lower integer value
+ceiling(x6) #higher integer value
 trunc(x6)
 round(x6,digits=2)  #round to decimal places
-signif(x6,digits=3)  #round to specified no of digits
+signif(x6,digits=3)  #round to specified no of digits not rounding decimal
+x6
+x6b = c(-10.5, 4.56, 5.3)
+x6b
+trunc(x6b)
+floor(x6b)
+
+x6c = c(05.24,5.24,5.2453)
+signif(x6c,3)
+
 
 # Basic operations on vector----
-x1
+x1=1:10
 sum(x1)
 cumsum(x1) # cumulative sum
 cumprod(x1)
@@ -92,15 +104,17 @@ x1 * c(2,4) #multiple 2 & 4 alternatively
 x1
 #similarly other operators can be used
 x1/2
-x1 ^ 2
-x1 ** 2
-x1 %% 2
-sqrt(x1)
+x1 ^ 2 #to power
+x1 ** 2 #power of 2
+x1 %% 2 #finding whether odd or even,  #modulo/ remainder
+sqrt(x1) #squear root
 sin(x1)
 
 #concatenate vectors
 x1; x2
-(x8 = c(x1, x2))
+x1
+x2
+(x8 = c(x1, x2)) #combining vector
 x8
 
 #min, max, compare ----
@@ -110,41 +124,87 @@ mean(x1)
 median(x1)
 mode(x1) #this mode is not stats mode
 length(x1)  #no of values
-x1==x2
+x1==x2 #1|=4, 2|=7, and goon.....   x2 will repeat after it finishes, that is from start
+x1; x2
+x1; c(x2,x2)
+
 5 < 6
 5 > 6
 5 == 6
 5 <= 6
 
 #attributes----
-str(x1)
-class(x1)
-typeof(x1)
+str(x1) #structure of vector
+class(x1) 
+typeof(x1) 
 summary(x1)
+
+quantile(x1)
+quantile(x1, c(.1,.3,.6,.7))
+#decile 10%, percentile 1%
+seq(0,1,.10)
+quantile(x1, seq(0,1,.1))
+quantile(x1, seq(0,1,.01))
+x1
 head(x1)
 head(x1,n=3)
 tail(x1)
-
+tail(x1,n=3)
+x1=sample(1:100)
+(x1=sample(1:100))
+head(x1,n=3)
+tail(x1,n=3)
 
 #missing values in vector (NA)----
-(x9 = c(1,5,14,NA,20,17, NA,9))
+(x9 = c(1,5,14,NA,20,17, NA,9)) #missing values are indicated by NA # importing filesfrom excel the blank, will be replaced by NA or if importing from other software, blank will show 99
+(x9b = c(1,5,14,20,17,9))
+length(x9)
+
 sum(x9) #error
-is.na(x9) #T & F 
+sum(x9,na.rm=T) # finding sum after removing NA
+
+is.na(x9) #T & F #is there any values which are missing, show true false in all positions
 #how many missing values
-sum(is.na(x9))
+sum(c(TRUE,F,T,T,T,F,T,F)) # sum of trues #T=1 and F=0 and sum them depending on hte number of T's and F's
+sum(is.na(x9)) # how many missing values
+
+y1=sample(1:100)
+y1[c(30,50,70,81)]=NA
+y1
+anyNA(y1) #is there any missing values?
+sum(is.na(y1))
+sum(y1, na.rm=T)
+
+length(x9)
 sum(x9, na.rm=T)
 na.omit(x9)
+?NA
 na.exclude(x9)
+
+length(x9)
+x9b=na.omit(x9)
+x9 ; length(x9b)
+
 #impute
-x9[is.na(x9)] = mean(x9, na.rm=T)
+mean(x9, na.rm=T) #mean of x9 non missing values
+is.na(x9) #where NA is there in x9
+x9c=x9
+x9[is.na(x9)] = mean(x9, na.rm=T) # where NA is there in x9  = mean of x9 non missing values
 x9
+
+
 
 #Other Vectors----
 class(x1)
-(x11 = c(10.4, 12.4, 15, 20)) #numeric
+(x11 = c(10.4, 12.4, 15, 20)) #numeric - will have decimals
 class(x11)
-(x12 = c(3L,6L,9L, 15L)) #integer
+(x12 = c(3L,6L,9L, 15L)) #integer - no decimals (L means integer)
 class(x12)
+(x11b = c(10.4, 12.4, 15, 20))
+class(x11b)
+x11c=as.integer(x11b) #convert numeric to integer
+class(x11c)
+
 
 #character----
 (x13 = c('henry', 'harvin', 'education'))
@@ -155,9 +215,10 @@ casefold(x13,upper=T)
 (x14 = c("BUSINESS", "MARKETING", 'FINANCIAL'))
 tolower(x14)
 casefold(x14,upper=F)
+#library(stringr)
 
 chartr("BMF","bmF",x14) #replace BMF with bmF
-strsplit(x14, "E") #split at point E is found
+?strsplit(x14, "E") #split at point E is found
 
 
 #Logical Vectors----
@@ -169,7 +230,7 @@ table(x20)  #T & F count
 
 #names to vector elements----
 x14
-names(x14) = c('CBAP','CMAP',"CFAP")
+names(x14) = c('CBAP','CMAP',"CFAP") #headings
 x14
 x14["CMAP"]  #value of label CMAP
 
